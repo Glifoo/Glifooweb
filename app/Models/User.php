@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'foto_perfil',
+        'cargo_id',
     ];
 
     /**
@@ -45,4 +47,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function position(){
+        return $this->belongsTo(Position::class);
+    }
+
 }
