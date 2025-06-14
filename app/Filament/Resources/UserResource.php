@@ -49,7 +49,7 @@ class UserResource extends Resource
                             ->disk('public')
                             ->directory('foto'),
                         Forms\Components\Select::make('position_id')
-                            ->options(Cargo::all()->pluck('nombre','id'))
+                            ->options(Position::all()->pluck('nombre','id'))
                             // ->searchable()
                             ->preload()
                             ->live()
@@ -80,7 +80,7 @@ class UserResource extends Resource
                     // ->searchable()
                     ->width(100)
                     ->height(100),
-                Tables\Columns\TextColumn::make('cargo.nombre')
+                Tables\Columns\TextColumn::make('position.nombre')
                     ->searchable(),
             ])
             ->filters([
