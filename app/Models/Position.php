@@ -10,7 +10,17 @@ class Position extends Model
         'nombre',
         'funcion',
         'service_id'
+    ];
 
-    ]
-    ;
+
+    // relaciones
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }

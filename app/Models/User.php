@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'foto_perfil',
         'cargo_id',
+        'foto_perfil',
+        'position_id',
     ];
 
     /**
@@ -48,9 +50,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+// relaciones
     public function position(){
         return $this->belongsTo(Position::class);
     }
