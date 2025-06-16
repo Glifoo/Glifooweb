@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Portfolio extends Model
 {
-    //
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'imagen',
+        'service_id',
+    ];
+     public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 }
