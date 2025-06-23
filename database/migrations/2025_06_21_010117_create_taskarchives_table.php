@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('byproducts', function (Blueprint $table) {
+        Schema::create('taskarchives', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->decimal('costo', 10, 2)->default(0.00)->nullable();
+
             $table->text('descripcion')->nullable();
+            $table->text('rutaarchivo')->nullable();
+            $table->text('nombrearchivo')->nullable();
+            $table->foreignId('task_id')
+            ->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('byproducts');
+        Schema::dropIfExists('taskarchives');
     }
 };
