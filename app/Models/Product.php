@@ -21,8 +21,8 @@ class Product extends Model
         return $this->hasMany(Byproduct::class);
     }
 
-    public function requests()
-    {
-        return $this->hasMany(Request::class);
-    }
+    // public function requests()
+    // {
+    //     return $this->hasMany(Request::class);
+    // }
 }
