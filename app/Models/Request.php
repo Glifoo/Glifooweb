@@ -27,4 +27,10 @@ class Request extends Model
     {
         return $this->hasMany(Sale::class);
     }
+    //
+    public function project(){
+        return $this->hasOne(Project::class);
+
+    }
+    
 }

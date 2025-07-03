@@ -18,4 +18,9 @@ class Byproduct extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    //
+        public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
 }
