@@ -57,5 +57,12 @@ class User extends Authenticatable
     public function service(){
         return $this->belongsTo(Service::class);
     }
+    //
+    public function task(){
+        return $this->hasMany(Task::class);
+    }
+    public function project(){
+        return $this->hasMany(Project::class);
+    } 
 
 }
