@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion')->nullable();
-            $table->text('imagen')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->string('imagen')->nullable();
             $table->foreignId('service_id')
             ->constrained();
             $table->timestamps();

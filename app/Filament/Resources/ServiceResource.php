@@ -21,6 +21,8 @@ class ServiceResource extends Resource
     protected static ?string $navigationLabel = 'Servicios';
     protected static ?string $pluralModelLabel = 'Servicios';
     protected static ?string $modelLabel = 'Servicio';
+    protected static ?int $navigationSort = 3;
+
 
     public static function form(Form $form): Form
     {
@@ -29,6 +31,12 @@ class ServiceResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('imagen')
+                    ->image()
+                    ->disk('public')
+                    ->directory('servicios'),
+                Forms\Components\TextArea::make('descripcion')
+                    ->maxLength(500),
             ]);
     }
 
@@ -38,6 +46,12 @@ class ServiceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('descripcion')
+                    ->limit(50),
+                    // ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make('imagen')
+                    ->width(100)
+                    ->height(100),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

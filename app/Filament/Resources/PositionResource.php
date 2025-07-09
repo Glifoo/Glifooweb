@@ -22,16 +22,14 @@ class PositionResource extends Resource
     protected static ?string $navigationLabel = 'Cargos';
     protected static ?string $pluralModelLabel = 'Cargos';
     protected static ?string $modelLabel = 'Cargo';
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('funcion')
-                    ->maxLength(255),
+
+        ->schema([
                 Forms\Components\Select::make('service_id')
                     ->required()
                     ->options(Service::all()->pluck('nombre','id'))
@@ -40,6 +38,13 @@ class PositionResource extends Resource
                     ->preload()
                     ->live()
                     ->default(fn () => Service::where('id', 1)->exists() ? 1 : null),
+                Forms\Components\TextInput::make('nombre')
+                    ->label('Nombre del cargo')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('funcion')
+                    ->maxLength(255),
+
             ]);
     }
 

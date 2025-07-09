@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->decimal('costo', 10, 2)->default(0.00)->nullable();
             $table->text('descripcion')->nullable();
+            $table->foreignId('product_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

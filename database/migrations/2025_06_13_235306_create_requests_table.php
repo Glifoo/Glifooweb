@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamp('fecha');
             $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('product_id')
-                ->nullable()
-                ->constrained();
             $table->foreignId('client_id')
                 ->constrained();
             $table->foreignId('byproduct_id')
