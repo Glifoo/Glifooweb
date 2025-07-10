@@ -8,6 +8,8 @@ class Service extends Model
 {
     protected $fillable = [
         'nombre',
+        'imagen',
+        'descripcion',
     ];
     
     // relaciones
