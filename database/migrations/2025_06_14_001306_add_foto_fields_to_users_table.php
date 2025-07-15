@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
                 $table->string('foto_perfil')->nullable();
-                $table->foreignId('position_id')
-                ->nullable()
-                ->constrained();
         });
     }
 

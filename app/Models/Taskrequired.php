@@ -4,23 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Taskrequired extends Model
+class taskRequired extends Model
 {
-    //
     protected $fillable = [
         'task_id',
-        'user_id',
-        'fecha_inicio',
-        'fecha_fin',
+        'service_id',
+        'descripcion',
         'estado',
+        'respuesta',
     ];
-
-    // Relaciones
-    public function task(){
+    //relaciones
+        public function task()
+    {
         return $this->belongsTo(Task::class);
     }
 
-    public function service(){
-        return $this->hasMany(Service::class);
-    }
 }

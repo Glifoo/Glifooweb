@@ -12,12 +12,11 @@ class Sale extends Model
         'request_id',
         'status_id',
     ];
-    // Relaciones
-     public function request()
+    //relaciones
+    public function request()
     {
         return $this->belongsTo(Request::class);
     }
-
     public function status()
     {
         return $this->belongsTo(Status::class);

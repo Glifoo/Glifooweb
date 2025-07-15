@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->timestamp('fecha');
             $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('client_id')
+            $table->foreignId('by_product_id')
+                ->nullable()
                 ->constrained();
-            $table->foreignId('byproduct_id')
-            ->nullable()
-            ->constrained();
+            $table->foreignId('client_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

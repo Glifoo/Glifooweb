@@ -9,10 +9,9 @@ class Status extends Model
     protected $fillable = [
         'nombre',
     ];
-    // Relaciones
-
-     public function sales()
+    //relaciones
+    public function sales()
     {
-        return $this->hasMany(Sale::class);
+        return $this->hasOne(Sale::class);
     }
 }

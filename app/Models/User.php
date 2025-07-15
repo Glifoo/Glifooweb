@@ -22,9 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'foto_perfil',
-        'cargo_id',
-        'foto_perfil',
-        'position_id',
+
     ];
 
     /**
@@ -50,19 +48,12 @@ class User extends Authenticatable
         ];
     }
 
-// relaciones
-    public function position(){
-        return $this->belongsTo(Position::class);
+    // relaciones de muchos a muchos
+    public function services(){
+        return $this->belongsToMany(Service::class);
     }
-    public function service(){
-        return $this->belongsTo(Service::class);
+    public function tasks(){
+        return $this->belongsToMany(Task::class);
     }
-    //
-    public function task(){
-        return $this->hasMany(Task::class);
-    }
-    public function project(){
-        return $this->hasMany(Project::class);
-    } 
 
 }
