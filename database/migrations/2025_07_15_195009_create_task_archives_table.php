@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taskarchives', function (Blueprint $table) {
+        Schema::create('task_archives', function (Blueprint $table) {
             $table->id();
-
-            $table->text('descripcion')->nullable();
-            $table->text('rutaarchivo')->nullable();
-            $table->text('nombrearchivo')->nullable();
             $table->foreignId('task_id')
-            ->constrained();
+                ->constrained();
+            $table->text('file_path')->nullable();
+            $table->text('file_name')->nullable();
+            $table->text('description')->nullable();
+            $table->foreignId('user_id')
+                ->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taskarchives');
+        Schema::dropIfExists('task_archives');
     }
 };

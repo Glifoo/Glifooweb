@@ -35,8 +35,9 @@ class ServiceResource extends Resource
                     ->image()
                     ->disk('public')
                     ->directory('servicios'),
-                Forms\Components\TextArea::make('descripcion')
-                    ->maxLength(500),
+                Forms\Components\TextArea::make('descripcion')    
+                ->maxLength(500)
+                    ,
             ]);
     }
 
@@ -62,7 +63,7 @@ class ServiceResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

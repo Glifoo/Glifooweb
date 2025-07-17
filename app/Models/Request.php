@@ -6,31 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'fecha',
         'estado',
-        'product_id',
+        'by_product_id',
         'client_id',
     ];
-    // Relaciones
-    public function product()
+    //relaciones
+    public function byProduct()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ByProducts::class);
     }
-
-    public function client()
-    {
+    public function sale(){
+        return $this->hasOne(Sale::class);
+    }
+    public function client(){
         return $this->belongsTo(Client::class);
     }
-
-    public function sales()
-    {
-        return $this->hasMany(Sale::class);
-    }
-    //
     public function project(){
         return $this->hasOne(Project::class);
-
     }
     
 }

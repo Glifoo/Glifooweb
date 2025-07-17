@@ -6,48 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    //
     protected $fillable = [
         'nombre',
-        'descripcion',
+        'detalle',
         'estado',
         'fechainicio',
         'fechafin',
-        'fechaentrega',
         'project_id',
-        'user_id',
     ];
-    // Relaciones
-
-    public function task(){
-        return $this->belongsTo(Task::class);
-    }
-
-    public function taskarchive(){
-        return $this->hasOne(Taskarchive::class);
+    //relaciones
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
     public function taskrequired()
     {
-        return $this->hasMany(Taskrequired::class);
+        return $this->hasMany(TaskRequired::class);
     }
-    //dependencias de tareas
-    public function dependencies(): belongsToMany
+    public function taskarchive()
     {
-        return $this->belongsToMany(
-            Task::class,
-            'taskdependencies',
-            'task_id',
-            'depends_on_task_id'
-            );
+        return $this->hasOne(TaskArchive::class);
     }
-    public function dependentTasks(): belongsToMany
+    //relaciones de muchos a muchos
+    public function users()
     {
-        return $this->belongsToMany(
-            Task::class,
-            'taskdependencies',
-            'depends_on_task_id',
-            'task_id'
-            );
+        return $this->belongsToMany(User::class);
     }
 
 }

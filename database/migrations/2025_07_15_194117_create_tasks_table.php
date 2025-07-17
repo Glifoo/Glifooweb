@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taskrequireds', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->text('descripcion')->nullable();
+            $table->string('nombre');
+            $table->text('detalle')->nullable();
             $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('task_id')
-            ->constrained();
-            $table->foreignId('service_id')
-            ->constrained();
-
+            $table->timestamp('fechainicio')->useCurrent();
+            $table->timestamp('fechafin')->nullable();
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taskrequireds');
+        Schema::dropIfExists('tasks');
     }
 };

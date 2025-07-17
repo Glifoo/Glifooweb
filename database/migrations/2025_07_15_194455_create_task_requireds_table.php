@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taskdependencies', function (Blueprint $table) {
+        Schema::create('task_requireds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')
-            ->constrained()
-            ->onDelete('cascade');
-            $table->unsignedBigInteger('dependens_on_task_id');
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('service_id')
+                ->constrained();
+            $table->text('descripcion')->nullable();
+            $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
 
-            $table->foreign('dependens_on_task_id')
-            ->references('id')
-            ->on('tasks')
-            ->onDelete('cascade');
-
+            $table->string('respuesta')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taskdependencies');
+        Schema::dropIfExists('task_requireds');
     }
 };

@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Taskarchive extends Model
+class taskArchive extends Model
 {
     protected $fillable = [
-        'descripcion',
-        'rutaarchivo',
-        'nombrearchivo',
         'task_id',
+        'file_path',
+        'file_name',
+        'description',
+        'user_id',
     ];
-        public function task()
+    //relaciones
+    public function task()
     {
         return $this->belongsTo(Task::class);
     }

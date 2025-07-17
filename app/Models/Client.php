@@ -11,11 +11,12 @@ class Client extends Model
         'telefono',
         'correo',
         'contenido',
+        'funcion',
+        'service_id',
     ];
-    // Relaciones
-
-      public function requests()
+    //relaciones
+        public function request()
     {
-        return $this->hasMany(Request::class);
+        return $this->hasOne(Request::class);
     }
 }

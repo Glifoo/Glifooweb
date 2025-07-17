@@ -58,37 +58,51 @@ class UserResource extends Resource
                             ->disk('public')
                             ->directory('foto'),
                             
-                        
-                        Section::make('Cargo al cual pertenece')
-                            ->columns(3)
-                            ->schema([
-                        Forms\Components\Select::make('service_id')
-                            // ->relationship(name:'service' , titleAttribute:'nombre')
-                            ->options(Service::all()->pluck('nombre','id'))
-                            ->label('Servicio')
-                            ->preload()
-                            ->live()
-                            // ->options(Position::all()->pluck('nombre','id'))
-                            ->afterStateUpdated(function(Set $set)
-                            {
-                                $set('position_id',null);
-                            })
-                            ->required()
-                            ->dehydrated(false),
-                        Forms\Components\Select::make('position_id')
-                            ->options(fn (Get $get): Collection => Position::query()
-                            ->where('service_id',$get('service_id'))
-                            ->pluck('nombre','id'))
-                            ->label('Cargo')
-                            ->preload()
-                            ->live()
-                            // ->afterStateUpdated(function(Set $set)
-                            // {
-                            //     $set('service_id',null);
-                            // })
-                            ->required(),
-                            // ->default(fn () => Position::where('id', 1)->exists() ? 1 : null),
-                        ])
+  Section::make('Cargo al cual pertenece')
+    ->columns(3)
+    ->schema([
+        Forms\Components\Select::make('service_id')
+            ->options(Service::all()->pluck('nombre','id'))
+            ->label('Servicio')
+            ->preload()
+            ->live()
+            // Resetea position_id cuando service_id cambia
+            ->afterStateUpdated(function (Set $set) {
+                $set('position_id', null);
+            })
+            // Al cargar el formulario, si hay un position_id, establece el service_id
+            ->afterStateHydrated(function (Set $set, ?int $state, Get $get) {
+                if ($get('position_id')) {
+                    $position = Position::find($get('position_id'));
+                    if ($position) {
+                        $set('service_id', $position->service_id);
+                    }
+                }
+            })
+            ->required()
+            ->dehydrated(false), // Sigue sin guardar service_id en el modelo
+
+        Forms\Components\Select::make('position_id')
+            ->options(fn (Get $get): Collection => Position::query()
+                ->where('service_id', $get('service_id'))
+                ->pluck('nombre','id'))
+            ->label('Cargo')
+            ->preload()
+            ->live()
+            // Cuando position_id cambia, actualiza service_id
+            ->afterStateUpdated(function (Set $set, ?int $state) {
+                if ($state) { // Si se ha seleccionado una posición
+                    $position = Position::find($state);
+                    if ($position) {
+                        $set('service_id', $position->service_id);
+                    }
+                } else {
+                    $set('service_id', null); // Si se deselecciona la posición
+                }
+            })
+            ->required(),
+    ])
+
                         ]),
                         ]);
     }
