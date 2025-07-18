@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
+use App\Models\User;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +14,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\Action as TableAction;
+use Filament\Notifications\Notification;
+
 
 class ServiceResource extends Resource
 {
@@ -31,12 +37,15 @@ class ServiceResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
+
+                Forms\Components\TextArea::make('descripcion')
+                    ->maxLength(500),
+
                 Forms\Components\FileUpload::make('imagen')
                     ->image()
                     ->disk('public')
                     ->directory('servicios'),
-                Forms\Components\TextArea::make('descripcion')
-                    ->maxLength(500),
+
             ]);
     }
 
@@ -48,7 +57,7 @@ class ServiceResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
                     ->limit(50),
-                    // ->toggleable(isToggledHiddenByDefault: true),
+                // ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\ImageColumn::make('imagen')
                     ->width(100)
                     ->height(100),
@@ -65,7 +74,27 @@ class ServiceResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                
+
+                Tables\Actions\Action::make('assignUser')
+                    ->icon('heroicon-o-user-plus')
+                    ->label('Asignar usuario')
+                    ->modalHeading('Asignar usuario al servicio')
+                    ->form([
+                        Select::make('user_id')
+                            ->label('Usuario')
+                            ->options(User::pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
+                    ])
+                    ->action(function (array $data, Service $record, TableAction $action) {
+                        $record->assignUser($data['user_id']);
+
+                        Notification::make()
+                            ->title('Se agrego correctamente')
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

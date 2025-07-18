@@ -51,9 +51,7 @@ class User extends Authenticatable
     }
 
 // relaciones
-    public function position(){
-        return $this->belongsTo(Position::class);
-    }
+    
     public function service(){
         return $this->belongsTo(Service::class);
     }
