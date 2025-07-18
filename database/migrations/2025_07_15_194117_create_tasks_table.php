@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('fecha');
+            $table->string('nombre');
+            $table->text('detalle')->nullable();
             $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('client_id')
-                ->constrained();
-            $table->foreignId('byproduct_id')
-            ->nullable()
-            ->constrained();
+            $table->timestamp('fechainicio')->useCurrent();
+            $table->timestamp('fechafin')->nullable();
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('tasks');
     }
 };

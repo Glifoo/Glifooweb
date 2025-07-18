@@ -9,11 +9,11 @@ class Service extends Model
 {
     protected $fillable = [
         'nombre',
-        'imagen',
         'descripcion',
+        'imagen',
     ];
 
-    // relaciones
+    //relaciones
 
     public function portfolios()
     {
@@ -24,23 +24,19 @@ class Service extends Model
     {
         return $this->hasMany(Product::class);
     }
-
-    public function positions()
-    {
-        return $this->hasMany(Position::class);
-    }
+    //relaciones de muchos a muchos
 
     public function users()
-{
-    return $this
-        ->belongsToMany(
-            User::class,
-            'serviceuser',       
-            'service_id',        
-            'user_id'            
-        )
-        ->withTimestamps();
-}
+    {
+        return $this
+            ->belongsToMany(
+                User::class,
+                'serviceuser',
+                'service_id',
+                'user_id'
+            )
+            ->withTimestamps();
+    }
     //metodos
     protected static function boot()
     {

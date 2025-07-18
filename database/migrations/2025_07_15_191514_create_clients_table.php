@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('user_id')
-            ->nullable()
-            ->constrained();
-            $table->foreignId('request_id')
-            ->constrained();
+            $table->integer('telefono');
+            $table->string('correo');
+            $table->text('contenido')->nullable();
+            $table->string('funcion')->nullable();
+            $table->foreignId('service_id')
+                ->nullable()
+                ->constrained();
+
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('clients');
     }
 };

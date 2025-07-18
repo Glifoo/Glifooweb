@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+<<<<<<< HEAD
                 $table->text('foto_perfil')->nullable();
                 $table->foreignId('position_id')
                 ->nullable()
                 ->constrained();
+=======
+                $table->string('foto_perfil')->nullable();
+>>>>>>> 436d09dca5483be38478c4fa907b914fcd5e2f72
         });
     }
 

@@ -11,6 +11,8 @@ class Product extends Model
         'service_id',
     ];
 
+
+    //relaciones
     public function service()
     {
         return $this->belongsTo(Service::class);
@@ -18,11 +20,10 @@ class Product extends Model
 
     public function byproducts()
     {
-        return $this->hasMany(Byproduct::class);
+        return $this->hasMany(ByProducts::class);
     }
 
-    // public function requests()
-    // {
-    //     return $this->hasMany(Request::class);
-    // }
+
+
+
 }

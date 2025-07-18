@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('byproducts', function (Blueprint $table) {
+        Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->decimal('costo', 10, 2)->default(0.00)->nullable();
-            $table->text('descripcion')->nullable();
-            $table->foreignId('product_id')
+            $table->timestamp('fecha');
+            $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
+            $table->foreignId('by_product_id')
+                ->nullable()
+                ->constrained();
+            $table->foreignId('client_id')
+                ->nullable()
                 ->constrained()
                 ->onDelete('cascade');
             $table->timestamps();
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('byproducts');
+        Schema::dropIfExists('requests');
     }
 };

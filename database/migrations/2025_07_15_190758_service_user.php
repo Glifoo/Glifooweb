@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taskrequireds', function (Blueprint $table) {
+        Schema::create('serviceUser', function (Blueprint $table) {
             $table->id();
-            $table->text('descripcion')->nullable();
-            $table->enum('estado',['pendiente','aprobado','rechazado'])->default('pendiente');
-            $table->foreignId('task_id')
-            ->constrained();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained();
             $table->foreignId('service_id')
-            ->constrained();
-
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade');
+            // $table->foreignId('rol_id')
+            //     ->nullable()
+            //     ->constrained()
+            //     ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taskrequireds');
+        Schema::dropIfExists('serviceUser');
     }
 };
