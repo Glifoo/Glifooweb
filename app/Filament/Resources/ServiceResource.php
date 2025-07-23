@@ -75,7 +75,6 @@ class ServiceResource extends Resource
             ])
             ->actions([
                 
-
                 Tables\Actions\Action::make('assignUser')
                     ->icon('heroicon-o-user-plus')
                     ->label('Asignar usuario')

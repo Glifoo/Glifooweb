@@ -18,7 +18,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\Model;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -47,7 +48,11 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('email')
                             ->email()
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                           ->unique(User::class, 'email', fn (?Model $record) => $record)
+                           ->validationMessages([
+                               'unique' => 'El correo electrónico ya está en uso.',
+                           ]),
                         Forms\Components\TextInput::make('password')
                             ->label('Contraseña')
                             ->password()
@@ -57,51 +62,53 @@ class UserResource extends Resource
                             ->image()
                             ->disk('public')
                             ->directory('foto'),
+                  
                             
-  Section::make('Cargo al cual pertenece')
-    ->columns(3)
-    ->schema([
-        Forms\Components\Select::make('service_id')
-            ->options(Service::all()->pluck('nombre','id'))
-            ->label('Servicio')
-            ->preload()
-            ->live()
-            // Resetea position_id cuando service_id cambia
-            ->afterStateUpdated(function (Set $set) {
-                $set('position_id', null);
-            })
-            // Al cargar el formulario, si hay un position_id, establece el service_id
-            ->afterStateHydrated(function (Set $set, ?int $state, Get $get) {
-                if ($get('position_id')) {
-                    $position = Position::find($get('position_id'));
-                    if ($position) {
-                        $set('service_id', $position->service_id);
-                    }
-                }
-            })
-            ->required()
-            ->dehydrated(false), // Sigue sin guardar service_id en el modelo
+                            //seleccion de cargos y servicio 
+//   Section::make('Cargo al cual pertenece')
+//     ->columns(3)
+//     ->schema([
+//         Forms\Components\Select::make('service_id')
+//             ->options(Service::all()->pluck('nombre','id'))
+//             ->label('Servicio')
+//             ->preload()
+//             ->live()
+//             // Resetea position_id cuando service_id cambia
+//             ->afterStateUpdated(function (Set $set) {
+//                 $set('position_id', null);
+//             })
+//             // Al cargar el formulario, si hay un position_id, establece el service_id
+//             ->afterStateHydrated(function (Set $set, ?int $state, Get $get) {
+//                 if ($get('position_id')) {
+//                     $position = Position::find($get('position_id'));
+//                     if ($position) {
+//                         $set('service_id', $position->service_id);
+//                     }
+//                 }
+//             })
+//             ->required()
+//             ->dehydrated(false), // Sigue sin guardar service_id en el modelo
 
-        Forms\Components\Select::make('position_id')
-            ->options(fn (Get $get): Collection => Position::query()
-                ->where('service_id', $get('service_id'))
-                ->pluck('nombre','id'))
-            ->label('Cargo')
-            ->preload()
-            ->live()
-            // Cuando position_id cambia, actualiza service_id
-            ->afterStateUpdated(function (Set $set, ?int $state) {
-                if ($state) { // Si se ha seleccionado una posición
-                    $position = Position::find($state);
-                    if ($position) {
-                        $set('service_id', $position->service_id);
-                    }
-                } else {
-                    $set('service_id', null); // Si se deselecciona la posición
-                }
-            })
-            ->required(),
-    ])
+//         Forms\Components\Select::make('position_id')
+//             ->options(fn (Get $get): Collection => Position::query()
+//                 ->where('service_id', $get('service_id'))
+//                 ->pluck('nombre','id'))
+//             ->label('Cargo')
+//             ->preload()
+//             ->live()
+//             // Cuando position_id cambia, actualiza service_id
+//             ->afterStateUpdated(function (Set $set, ?int $state) {
+//                 if ($state) { // Si se ha seleccionado una posición
+//                     $position = Position::find($state);
+//                     if ($position) {
+//                         $set('service_id', $position->service_id);
+//                     }
+//                 } else {
+//                     $set('service_id', null); // Si se deselecciona la posición
+//                 }
+//             })
+//             ->required(),
+//     ])
 
                         ]),
                         ]);
@@ -129,9 +136,9 @@ class UserResource extends Resource
                     // ->searchable()
                     ->width(100)
                     ->height(100),
-                Tables\Columns\TextColumn::make('position.nombre')
-                    ->searchable(),
+
             ])
+            
             ->filters([
                 //
             ])
