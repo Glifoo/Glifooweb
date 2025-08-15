@@ -62,7 +62,9 @@ class User extends Authenticatable
         });
 
         static::deleting(function ($foto) {
-            Storage::disk('public')->delete($foto->foto_perfil);
+            if ($foto->foto_perfil) {
+                Storage::disk('public')->delete($foto->foto_perfil);
+            }
         });
     }
 

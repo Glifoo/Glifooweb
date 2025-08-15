@@ -24,6 +24,10 @@ class Service extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
     //relaciones de muchos a muchos
 
     public function users()
@@ -50,7 +54,9 @@ class Service extends Model
         });
 
         static::deleting(function ($foto) {
-            Storage::disk('public')->delete($foto->imagen);
+            if ($foto->imagen) {
+                Storage::disk('public')->delete($foto->imagen);
+            }
         });
     }
 
