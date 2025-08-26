@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignId('service_id')
                 ->nullable()
                 ->constrained();
-
             $table->timestamps();
         });
     }

@@ -15,8 +15,13 @@ class Client extends Model
         'service_id',
     ];
     //relaciones
+
         public function request()
     {
         return $this->hasOne(Request::class);
+    }
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }

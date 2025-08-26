@@ -75,11 +75,11 @@ class ServiceResource extends Resource
             ])
             ->actions([
                 
-
                 Tables\Actions\Action::make('assignUser')
                     ->icon('heroicon-o-user-plus')
                     ->label('Asignar usuario')
                     ->modalHeading('Asignar usuario al servicio')
+                    ->color('info')
                     ->form([
                         Select::make('user_id')
                             ->label('Usuario')
@@ -95,11 +95,13 @@ class ServiceResource extends Resource
                             ->success()
                             ->send();
                     }),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
