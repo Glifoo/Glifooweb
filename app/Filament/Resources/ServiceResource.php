@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\Action as TableAction;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ActionGroup;
 
 
 class ServiceResource extends Resource
@@ -46,6 +47,16 @@ class ServiceResource extends Resource
                     ->disk('public')
                     ->directory('servicios'),
 
+                Forms\Components\FileUpload::make('avatar')
+                    ->image()
+                    ->disk('public')
+                    ->directory('servicios'),
+
+                Forms\Components\Toggle::make('estado')
+                    ->label('Estado Activo')
+                    ->hiddenOn(['create'])
+                    ->default(false),
+
             ]);
     }
 
@@ -61,6 +72,9 @@ class ServiceResource extends Resource
                 Tables\Columns\ImageColumn::make('imagen')
                     ->width(100)
                     ->height(100),
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->width(100)
+                    ->height(100),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,33 +84,33 @@ class ServiceResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                
-            ])
+            ->filters([])
             ->actions([
-                
-                Tables\Actions\Action::make('assignUser')
-                    ->icon('heroicon-o-user-plus')
-                    ->label('Asignar usuario')
-                    ->modalHeading('Asignar usuario al servicio')
-                    ->color('info')
-                    ->form([
-                        Select::make('user_id')
-                            ->label('Usuario')
-                            ->options(User::pluck('name', 'id'))
-                            ->searchable()
-                            ->required(),
-                    ])
-                    ->action(function (array $data, Service $record, TableAction $action) {
-                        $record->assignUser($data['user_id']);
+                ActionGroup::make([
+                    Tables\Actions\Action::make('assignUser')
+                        ->icon('heroicon-o-user-plus')
+                        ->label('Asignar usuario')
+                        ->modalHeading('Asignar usuario al servicio')
+                        ->color('info')
+                        ->form([
+                            Select::make('user_id')
+                                ->label('Usuario')
+                                ->options(User::pluck('name', 'id'))
+                                ->searchable()
+                                ->required(),
+                        ])
+                        ->action(function (array $data, Service $record, TableAction $action) {
+                            $record->assignUser($data['user_id']);
 
-                        Notification::make()
-                            ->title('Se agrego correctamente')
-                            ->success()
-                            ->send();
-                    }),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                            Notification::make()
+                                ->title('Se agrego correctamente')
+                                ->success()
+                                ->send();
+                        }),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

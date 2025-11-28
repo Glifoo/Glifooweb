@@ -11,6 +11,8 @@ class Service extends Model
         'nombre',
         'descripcion',
         'imagen',
+        'estado',
+        'avatar',
     ];
 
     //relaciones
@@ -46,16 +48,34 @@ class Service extends Model
     {
         parent::boot();
 
+        // Cuando se actualiza
         static::updating(function ($foto) {
 
-            if ($foto->isDirty('imagen')) {
-                Storage::disk('public')->delete('/' . $foto->getOriginal('imagen'));
+           
+            $campos = ['imagen', 'avatar'];
+
+            foreach ($campos as $campo) {
+                if ($foto->isDirty($campo)) {
+                    $original = $foto->getOriginal($campo);
+
+                    if ($original && Storage::disk('public')->exists($original)) {
+                        Storage::disk('public')->delete($original);
+                    }
+                }
             }
         });
 
+       
         static::deleting(function ($foto) {
-            if ($foto->imagen) {
-                Storage::disk('public')->delete($foto->imagen);
+
+            $campos = ['imagen', 'avatar'];
+
+            foreach ($campos as $campo) {
+                $archivo = $foto->{$campo};
+
+                if ($archivo && Storage::disk('public')->exists($archivo)) {
+                    Storage::disk('public')->delete($archivo);
+                }
             }
         });
     }

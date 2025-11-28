@@ -1,0 +1,301 @@
+ :root {
+     --primary-color: #32353d;
+     --secondary-color: #fcd031;
+     --text-color: #333;
+     --background-color: #f8f9fa;
+     --font-base: 'Arial', sans-serif;
+ }
+
+ .principal {
+     display: flex;
+     flex-wrap: wrap;
+     width: 80%;
+     justify-content: center;
+     padding: 40px 20px;
+     min-height: 100vh;
+ }
+
+ /* Header de servicios */
+ .servicios-header {
+     text-align: center;
+     margin-bottom: 50px;
+     width: 100%;
+ }
+
+ .prueba {
+     text-align: center;
+     margin-top: 100px;
+     margin-bottom: 50px;
+     width: 100%;
+ }
+
+ .servicios-banner {
+     display: flex;
+     justify-content: center;
+     padding: 10px;
+     width: 100%;
+     background-color: var(--secondary-color);
+     margin-bottom: 50px;
+ }
+
+ .servicios-banner img {
+     width: 350px;
+     margin: 35px;
+     height: auto;
+ }
+
+ .titulo-servicios {
+     font-size: 2.8rem;
+     font-weight: 700;
+     color: #fcd031;
+     margin-bottom: 15px;
+ }
+
+ .subtitulo-servicios {
+     font-size: 1.7rem;
+     color: white;
+     max-width: 600px;
+     margin: 0 auto;
+ }
+
+ /* Botones de acción */
+ .servicio-acciones {
+     margin-top: 20px;
+     padding-top: 20px;
+     border-top: 1px solid #fcd031;
+ }
+
+ .btn-mas-info {
+     background: #32353d;
+     color: white;
+     border: none;
+     padding: 10px 20px;
+     border-radius: 8px;
+     font-weight: 600;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     width: 100%;
+ }
+
+ .btn-mas-info:hover {
+     background: #fcd031;
+     color: #32353d;
+     transform: translateY(-2px);
+ }
+
+ /* Mejora para estado vacío */
+ .no-servicios .icono-vacio {
+     font-size: 4rem;
+     margin-bottom: 20px;
+ }
+
+ .no-servicios .texto-secundario {
+     font-size: 1rem;
+     color: #adb5bd;
+     margin-top: 10px;
+ }
+
+ /* Contenedor de servicios */
+ .servicios-container {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+     gap: 30px;
+     width: 100%;
+     max-width: 1200px;
+     margin: 0 auto;
+     margin-bottom: 50px;
+ }
+
+ /* Tarjeta de servicio */
+ .servicio-item {
+     background: white;
+     border-radius: 16px;
+     overflow: hidden;
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+     transition: all 0.3s ease;
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+ }
+
+ .servicio-item:hover {
+     transform: translateY(-8px);
+     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Contenedor de imagen */
+ .servicio-imagen {
+     position: relative;
+     height: 250px;
+     overflow: hidden;
+ }
+
+ .servicio-imagen img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     transition: transform 0.5s ease;
+ }
+
+ .servicio-item:hover .servicio-imagen img {
+     transform: scale(1.05);
+ }
+
+ /* Overlay para imagen */
+ .servicio-imagen::after {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: linear-gradient(to bottom, transparent 0%, rgba(50, 53, 61, 0.1) 100%);
+     opacity: 0;
+     transition: opacity 0.3s ease;
+ }
+
+ .servicio-item:hover .servicio-imagen::after {
+     opacity: 1;
+ }
+
+ /* Información del servicio */
+ .servicio-info {
+     padding: 25px;
+     flex-grow: 1;
+     display: flex;
+     flex-direction: column;
+     background: white;
+ }
+
+ .servicio-info h4 {
+     font-size: 1.4rem;
+     font-weight: 700;
+     color: var(--secondary-color);
+     margin-bottom: 12px;
+     line-height: 1.3;
+ }
+
+ .servicio-info p {
+     color: var(--primary-color);
+     line-height: 1.6;
+     margin-bottom: 0;
+     flex-grow: 1;
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+ }
+
+ /* Estado cuando no hay servicios */
+ .no-servicios {
+     grid-column: 1 / -1;
+     text-align: center;
+     padding: 60px 20px;
+     background: white;
+     border-radius: 16px;
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+ }
+
+ .no-servicios p {
+     font-size: 1.2rem;
+     color: #6c757d;
+     margin: 0;
+ }
+
+ /* Efectos de acento con tus colores institucionales */
+ .servicio-item {
+     border-top: 4px solid transparent;
+ }
+
+ .servicio-item:hover {
+     border-top-color: #fcd031;
+ }
+
+ /* Badge opcional para servicios destacados */
+ .servicio-badge {
+     position: absolute;
+     top: 15px;
+     right: 15px;
+     background: #fcd031;
+     color: #32353d;
+     padding: 6px 12px;
+     border-radius: 20px;
+     font-size: 0.8rem;
+     font-weight: 600;
+     z-index: 2;
+ }
+
+ .informaciones {
+     display: flex;
+     flex-direction: row;
+     width: 100%;
+ }
+
+ .info {
+     display: flex;
+     flex-direction: row;
+     width: 100%;
+ }
+
+ .portfolio {
+     display: flex;
+     align-items: center;
+     width: 30%;
+     padding: 3%;
+     background-color: #fcd031;
+ }
+ .portfolio  p{
+    font-size: 1.1rem;
+    color: black;
+ }
+ .moreoinfo  p{
+    font-size: 1.1rem;
+    color: black;
+ }
+
+ .moreoinfo {
+     display: flex;
+     align-items: center;
+     width: 70%;
+     padding: 3%;
+     background-color: #f8f9fa;
+ }
+
+
+ @media (max-width: 480px) {
+     .servicios-container {
+         grid-template-columns: 1fr;
+     }
+
+     .servicio-item {
+         margin: 0 10px;
+     }
+ }
+
+ /* Animaciones */
+ @keyframes fadeInUp {
+     from {
+         opacity: 0;
+         transform: translateY(30px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+ .servicio-item {
+     animation: fadeInUp 0.6s ease-out;
+ }
+
+ /* Efecto de carga para imágenes */
+ .servicio-imagen img {
+     background: #f8f9fa;
+ }
+
+ /* Mejora de accesibilidad */
+ .servicio-item:focus-within {
+     outline: 2px solid #fcd031;
+     outline-offset: 2px;
+ }
