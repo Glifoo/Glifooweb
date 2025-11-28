@@ -1,3 +1,9 @@
+@props([
+    'titulo' => 'Glifoo',
+    'url' => null,
+    'js' => null,
+])
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -13,94 +19,85 @@
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset('./img/logos/Boton.ico') }}">
+    <link rel="icon" href="{{ asset('img/logos/Boton.ico') }}">
     <link rel="stylesheet" href="{{ asset('estilo/base.css') }}">
-    <link rel="stylesheet" href="{{ $url ?? '' }}">
+    @if ($url)
+        <link rel="stylesheet" href="{{ $url }}">
+    @endif
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-
     <header class="main-header">
-
         <a class="main-logo" href="{{ route('inicio') }}">
-            <img src="{{ asset('./img/logos/GlifooComunicacion.png') }}" alt="">
+            <img src="{{ asset('img/logos/GlifooComunicacion.png') }}" alt="Logo Glifoo">
         </a>
         <nav id="nav" class="main-nav">
             <div class="nav-links">
-
-                {{-- <a class="link-item" href="{{ route('inicio') }}">Glifoo Pulse</a>
-                <a class="link-item" href="{{ route('socios') }}">Clientes</a>
-                <a class="link-item" href="{{ route('planes') }}">Servicios</a>
-                <a class="link-item" href="{{ route('usuariologin') }}">Login</a> --}}
-
-
+                <a class="link-item" href="#">Inicio</a>
+                <a class="link-item" href="{{ route('servicio') }}">Servicios</a>
+                <a class="link-item" href="#">Contacto</a>
+                <a class="link-item" href="#">Contacto</a>
+                <a class="link-item" href="#">Pulse</a>
+                <a class="link-item" href="{{ route('filament.admin.auth.login') }}">Login</a>
             </div>
         </nav>
         <button id="button-menu" class="button-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
     </header>
-    @include('layouts.alertas')
-    <main class="main-content">
 
+    @include('layouts.alertas')
+
+    <main class="main-content">
         {{ $slot }}
     </main>
 
-    {{-- <div class="aviso-cookies" id="aviso-cookies">
-        <img class="galleta" src="./img/logos/Boton.webp" alt="Galleta">
-        <h3 class="titulo">Cookies</h3>
-        <p class="parrafo">Utilizamos cookies propias y de terceros para mejorar nuestros servicios.</p>
-        <button class="boton" id="btnCokies">De acuerdo</button>
-    </div>
-    <div class="fondo-aviso-cookies" id="fondo-aviso-cookies"></div> --}}
-    @yield('js')
-    
     <footer>
         <div class="pie">
             <div class="caja">
-                <a href="{{ route('inicio') }}"><img src="{{ asset('./img/logos/LogoGlifoo.png') }}"
-                        alt=""></a>
+                <a href="{{ route('inicio') }}">
+                    <img src="{{ asset('img/logos/LogoGlifoo.png') }}" alt="Logo Glifoo">
+                </a>
             </div>
             <div class="caja">
                 <a href="https://api.whatsapp.com/message/CYAKMDYVY2D3F1?autoload=1&app_absent=0" target="_blank"
                     rel="noopener">
-                    <img src="{{ asset('./img/logos/Whatsapp.png') }}" alt="">
+                    <img src="{{ asset('img/logos/Whatsapp.png') }}" alt="WhatsApp">
                 </a>
-                <a href="https://www.tiktok.com/@glifoo?lang=es" target="_blank" rel="noopener"><img
-                        src="{{ asset('./img/logos/TikTok.png') }}" alt=""></a>
+                <a href="https://www.tiktok.com/@glifoo?lang=es" target="_blank" rel="noopener">
+                    <img src="{{ asset('img/logos/TikTok.png') }}" alt="TikTok">
+                </a>
                 <a href="https://twitter.com/Glifoo_cc" target="_blank" rel="noopener">
-                    <img src="{{ asset('./img/logos/Twitter.png') }}" alt="">
+                    <img src="{{ asset('img/logos/Twitter.png') }}" alt="Twitter">
                 </a>
                 <a href="https://www.youtube.com/channel/UCRETsH6tXdRtO5z0yo0fYAw" target="_blank" rel="noopener">
-                    <img src="{{ asset('./img/logos/Youtube.png') }}" alt="">
+                    <img src="{{ asset('img/logos/Youtube.png') }}" alt="YouTube">
                 </a>
                 <a href="https://www.instagram.com/glifoo.cc/" target="_blank" rel="noopener">
-                    <img src="{{ asset('./img/logos/Instagram.png') }}" alt="">
+                    <img src="{{ asset('img/logos/Instagram.png') }}" alt="Instagram">
                 </a>
                 <a href="https://www.facebook.com/glifoo" target="_blank" rel="noopener">
-                    <img src="{{ asset('./img/logos/Facebook.png') }}" alt="">
+                    <img src="{{ asset('img/logos/Facebook.png') }}" alt="Facebook">
                 </a>
             </div>
         </div>
-
     </footer>
+
     <div class="final">
         <div class="copy">
             <a href="{{ route('inicio') }}">
                 <p>©2025 Glifoo - Comunicación Digital</p>
             </a>
-            {{-- <div>
-                <a href="{{ route('privacidad') }}">Políticas de privacidad</a>
-            </div> --}}
         </div>
     </div>
 
-    {{-- <script src="./js/avisoCokies.js"></script> --}}
-    <script src="{{ asset('./dinamico/index.js') }}"></script>
-    <script src="{{ $js ?? '' }}"></script>
+ 
+    <script src="{{ asset('dinamico/index.js') }}"></script>
+    @if ($js)
+        <script src="{{ $js }}"></script>
+    @endif
+    @stack('js')
 </body>
 
 </html>

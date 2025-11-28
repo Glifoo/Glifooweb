@@ -1,6 +1,6 @@
 .principal {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 80%;
     justify-content: center;
     padding: 15px;
